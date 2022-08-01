@@ -1,11 +1,14 @@
 package com.example.demo.module.currency.controller;
 
+import java.util.NoSuchElementException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -104,6 +107,23 @@ public class CurrencyNameController {
 		return res;
 	}
 	
-	 // TODO: get
+	@GetMapping(path = "/{id}", name = "API-CurrencyName-SELECT")
+	public Result findById(@PathVariable long id) {
+		// check data
+		if (0 >= id) {
+			return new Result("", false, "幣別名查詢失敗:查詢條件有誤");
+		}
 
+		// process
+		CurrencyName ccyName;
+		try {
+			ccyName = ccyDao.findById(id).get();
+		} catch (NoSuchElementException e) {
+			return new Result("", false, "不存在");
+		} catch (Exception e) {
+			return new Result("", false, "幣別名查詢失敗，請洽管理員");
+		}
+
+		return new Result(ccyName, true, "查詢成功");
+	}
 }
