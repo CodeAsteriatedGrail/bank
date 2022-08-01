@@ -1,2 +1,20 @@
 server:
   port: 8080
+  
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:homework;IFEXISTS=FALSE; # h2 database 連接位址
+    driver-class-name: org.h2.Driver # 配置driver
+    username: sa # database 用戶名
+    password:  # database 密碼
+
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true # for data.sql
+    properties.hibernate.enable_lazy_load_no_trans: true # for test find method
+    hibernate:
+      ddl-auto: none # for schema.sql
