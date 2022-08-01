@@ -5,6 +5,8 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -82,6 +84,26 @@ public class CurrencyNameController {
 		Result res = new Result(ccyName, true, "");
 		return res;
 	}
+	
+	@DeleteMapping(path = "/{id}", name = "API-CurrencyName-DELETE")
+	public Result delete(@PathVariable long id) {
+		// check data
+		if (false == ccyDao.existsById(id)) {
+			return new Result("", false, "不存在");
+		}
 
-	 // TODO: get, , delete
+		// process
+		try {
+			ccyDao.deleteById(id);
+		} catch (Exception e) {
+			// CURRENCY_NAME
+			return new Result("", false, "幣別名刪除失敗，請洽管理員");
+		}
+
+		Result res = new Result("", true, "刪除成功");
+		return res;
+	}
+	
+	 // TODO: get
+
 }

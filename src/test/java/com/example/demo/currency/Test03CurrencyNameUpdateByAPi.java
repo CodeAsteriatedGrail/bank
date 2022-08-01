@@ -11,7 +11,7 @@ import com.example.demo.module.currency.entity.CurrencyName;
 import com.google.gson.Gson;
 
 public class Test03CurrencyNameUpdateByAPi {
-	private static String createPersonUrl = "http://127.0.0.1:8080/currencyName";
+	private static String URL = "http://127.0.0.1:8080/currencyName";
 
 	public static void main(String[] args) {
 		// entity
@@ -25,7 +25,7 @@ public class Test03CurrencyNameUpdateByAPi {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> responseEntity = null;
 		try {
-			responseEntity = restTemplate.exchange(createPersonUrl, HttpMethod.PUT, entity, String.class);
+			responseEntity = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
 		} catch (Exception e) {
 			Assert.state(false, "連線失敗");
 		}

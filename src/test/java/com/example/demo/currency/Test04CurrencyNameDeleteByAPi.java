@@ -7,23 +7,23 @@ import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.model.Result;
-import com.example.demo.module.currency.entity.CurrencyName;
 import com.google.gson.Gson;
 
-public class Test02CurrencyNameSaveByAPi {
-	private static String URL = "http://127.0.0.1:8080/currencyName";
+public class Test04CurrencyNameDeleteByAPi {
+	private static String URL = "http://127.0.0.1:8080/currencyName/%d";
 
 	public static void main(String[] args) {
 		// entity
-		CurrencyName ccyName = new CurrencyName();
-		ccyName.setChineseTraditional("大富翁幣");
-		ccyName.setCode("USE");
-		HttpEntity<CurrencyName> entity = new HttpEntity<>(ccyName);
+		String sendURL = String.format(URL, 1L);
 
 		// restTemplate
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> responseEntity = restTemplate.exchange(URL, HttpMethod.POST, entity,
-				String.class);
+		ResponseEntity<String> responseEntity = null;
+		try {
+			responseEntity = restTemplate.exchange(sendURL, HttpMethod.DELETE, HttpEntity.EMPTY, String.class);
+		} catch (Exception e) {
+			Assert.state(false, "連線失敗");
+		}
 
 		// check statusCode
 		Assert.isTrue(200 == responseEntity.getStatusCodeValue(), "API呼叫失敗");
@@ -32,8 +32,7 @@ public class Test02CurrencyNameSaveByAPi {
 		Result result = g.fromJson(jsonString, Result.class);
 
 		// fail
-		Assert.isTrue(result.isSuccess(), "新增失敗: " + result.getMessage());
-
+		Assert.isTrue(result.isSuccess(), "刪除失敗: " + result.getMessage());
 		// success
 		System.out.println(result.getData().toString());
 	}
