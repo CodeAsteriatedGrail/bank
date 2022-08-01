@@ -44,6 +44,9 @@ public class CurrencyName implements Serializable {
 	}
 
 	public void setId(Long id) {
+		if(null != id && 0 > id) {
+			throw new IllegalArgumentException("序號有值時需>0");
+		}
 		this.id = id;
 	}
 

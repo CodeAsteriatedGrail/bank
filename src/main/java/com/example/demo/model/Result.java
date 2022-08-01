@@ -29,7 +29,7 @@ public class Result {
 	 * for use gson library avoid bug
 	 * @return
 	 */
-	public boolean getSuccess() {
+	public boolean getIsSuccess() {
 		return isSuccess;
 	}
 
