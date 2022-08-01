@@ -24,6 +24,14 @@ public class Result {
 	public boolean isSuccess() {
 		return isSuccess;
 	}
+	
+	/**
+	 * for use gson library avoid bug
+	 * @return
+	 */
+	public boolean getSuccess() {
+		return isSuccess;
+	}
 
 	public void setSuccess(boolean isSuccess) {
 		this.isSuccess = isSuccess;

@@ -1,18 +1,52 @@
 package com.example.demo.module.currency.controller;
 
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.Result;
+import com.example.demo.module.currency.dao.CurrencyNameDao;
+import com.example.demo.module.currency.entity.CurrencyName;
 
 @RequestMapping("currencyName")
 @RestController
 public class CurrencyNameController {
-	/**
-	 * TODO: 建立一張幣別與其對應中文名稱的資料表（需附建立 SQL 語法），並
-	 * 提供 查詢 / 新增 / 修改 / 刪除 功能 API。
-	 * @return
-	 */
-    @RequestMapping("/")
-    public String findAll(){
-        return "";
-    }
+	@Autowired
+	private CurrencyNameDao ccyDao;
+	
+	@PostMapping(path = "", name = "API-CurrencyName-CREATE")
+	public Result save(@RequestBody @NonNull CurrencyName dataCcyName) {
+		// check data
+		String chinese = dataCcyName.getChineseTraditional();
+		String code = dataCcyName.getCode();
+		boolean isAnyBlank = StringUtils.isAnyBlank(chinese, code);
+		if (isAnyBlank) {
+			return new Result("", false, "資料不足");
+		}
+
+		// process
+		dataCcyName.setId(null);
+		CurrencyName ccyName;
+		try {
+			ccyName = ccyDao.save(dataCcyName);
+		} catch (DataIntegrityViolationException e) {
+			boolean isConstraint = e.getCause().getClass().equals(ConstraintViolationException.class);
+			String err = isConstraint ? "資料重複" : "其他異常";
+			return new Result("", false, err);
+		} catch (Exception e) {
+			// CURRENCY_NAME
+			return new Result("", false, "幣別名存檔失敗，請洽管理員");
+		}
+
+		Result res = new Result(ccyName, true, "");
+		return res;
+	}
+
+	 // TODO: get, update, delete
 }
