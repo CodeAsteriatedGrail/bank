@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.demo.module.currency.dao.CurrencyDao;
+import com.example.demo.module.currency.dao.CurrencyNameDao;
 import com.example.demo.module.currency.entity.CurrencyName;
 
 @SpringBootTest
 public class TestCurrency {
 	@Autowired
-	CurrencyDao dao;
+	CurrencyNameDao dao;
 
 	
 	// TODO: CRUD currency API

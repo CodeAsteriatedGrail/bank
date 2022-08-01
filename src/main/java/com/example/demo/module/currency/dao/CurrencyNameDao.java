@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.module.currency.entity.CurrencyName;
 
 @Repository
-public interface CurrencyDao extends JpaRepository<CurrencyName, Long> {
+public interface CurrencyNameDao extends JpaRepository<CurrencyName, Long> {
 
 }
