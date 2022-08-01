@@ -1,5 +1,6 @@
 package com.example.demo.module.gatway.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.ToString;
 
 @ToString
-public class CurrencyPrice {
+public class CurrencyPrice implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@JsonProperty(value = "time")
 	private Map<String, String> time;
@@ -19,7 +22,7 @@ public class CurrencyPrice {
 	@JsonProperty(value = "chartName")
 	private String chartName;
 
-	@JsonProperty(value = "disclaimers")
+	@JsonProperty(value = "disclaimer")
 	private String disclaimer;
 
 	public Map<String, String> getTime() {

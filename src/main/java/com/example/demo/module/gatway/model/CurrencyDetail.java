@@ -1,5 +1,6 @@
 package com.example.demo.module.gatway.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.ToString;
 
 @ToString
-public class CurrencyDetail {
+public class CurrencyDetail implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@JsonProperty(value = "code")
 	private String code;
