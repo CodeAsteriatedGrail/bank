@@ -8,4 +8,5 @@ import com.example.demo.module.currency.entity.CurrencyName;
 @Repository
 public interface CurrencyNameDao extends JpaRepository<CurrencyName, Long> {
 
+	CurrencyName findByCode(String code);
 }
